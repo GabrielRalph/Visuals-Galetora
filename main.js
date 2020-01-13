@@ -77,6 +77,7 @@ function draw(){
 }
 
 function keyPressed(){
+  col = 0;
   var on = fullscreen();
   fullscreen(!on)
 }
