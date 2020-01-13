@@ -1,9 +1,12 @@
-var mic, fft, sig1, sig2, sig3, rad, rad2
+var logo, mic, fft, sig1, sig2, sig3, rad, rad2
 var h = window.innerHeight;
 var w = window.innerWidth;
 
+function preload(){
+  logo = loadImage('Assets/logo.png')
+  }
 function setup(){
-  createCanvas(w,h)
+  createCanvas(w,h);
   background(0);
   mic = new p5.AudioIn();
 
@@ -25,69 +28,73 @@ let xPos = 0;
 let beat = 0;
 let lastBeat = 0;
 let col = 255;
+let start = false;
 function draw(){
+
   background(col)
-  xPos = (xPos + 1)%width
+  if(start&&(col == 0)){
+    xPos = (xPos + 1)%width
 
-  let spectrum = fft.analyze()
-  let bass = fft.getEnergy(50, 80)
+    let spectrum = fft.analyze()
+    let bass = fft.getEnergy(50, 80)
 
-  sig1.add(bass);
-  sig2.add(bass);
-  sig3.add(bass);
-  strokeWeight(5)
-  stroke(255, 0, 0);
-  line(xPos, height, xPos, height - sig2.mean());
+    sig1.add(bass);
+    sig2.add(bass);
+    sig3.add(bass);
+    strokeWeight(5)
+    stroke(255, 0, 0);
+    line(xPos, height, xPos, height - sig2.mean());
 
-  stroke(255, 255, 0);
-  line(xPos+5, height, xPos+5, height - sig2.median());
+    stroke(255, 255, 0);
+    line(xPos+5, height, xPos+5, height - sig2.median());
 
-  stroke(0, 255, 0);
-  line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()/10);
+    stroke(0, 255, 0);
+    line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()/10);
 
-  stroke(255, 0, 0);
-  line(xPos, 0, xPos, sig1.mean());
+    stroke(255, 0, 0);
+    line(xPos, 0, xPos, sig1.mean());
 
-  stroke(255, 255, 0);
-  line(xPos+5, 0, xPos+5, sig1.median());
+    stroke(255, 255, 0);
+    line(xPos+5, 0, xPos+5, sig1.median());
 
-  stroke(0, 255, 0);
-  line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()/10);
+    stroke(0, 255, 0);
+    line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()/10);
 
-  beat = sig2.dif()*10
-  if(beat > 30){
-     rad.changeVel(0.2, 10)
-     rad2.r = rad2.size + sig1.dif()*30;
-   }
-  lastBeat = beat;
-  stroke(200, 255, 50);
-  fill(spectrum[0], spectrum[1]*0.5, spectrum[3]);
-  // loveHeart(width/2-500,height/2,bass);
-  // loveHeart(width/2-500,height/2,sig2.dif()*sig2.mean()/10)
-  // loveHeart(width/2-500,height/2,sig2.mean())
-  rad2.render();
-  stroke(57, 255, 124);
-  fill(spectrum[2], spectrum[1], spectrum[0]*0.5);
-  // loveHeart(width/2+500,height/2,sig2.mean())
-  // loveHeart(width/2+500,height/2,bass);
-  // loveHeart(width/2+500,height/2,sig3.dif()*sig3.mean()/10);
-  stroke(255, 25, 55);
-  fill(spectrum[2]*0.5, spectrum[1]*2, spectrum[0]);
-  rad.render();
+    beat = sig2.dif()*10
+    if(beat > 30){
+       rad.changeVel(0.2, 10)
+       rad2.r = rad2.size + sig1.dif()*30;
+     }
+
+    stroke(200, 255, 50);
+    fill(spectrum[0], spectrum[1]*0.5, spectrum[3]);
+    rad2.render();
+
+    stroke(255, 25, 55);
+    fill(spectrum[2]*0.5, spectrum[1]*2, spectrum[0]);
+    rad.render();
+  }else{
+    image(logo, width/2, height/2);
+    imageMode(CENTER);
+    tint(255, col);
+    if(start){
+      col -= 5;
+    }
+  }
+
 }
 
 function keyPressed(){
-  col = 0;
   var on = fullscreen();
   fullscreen(!on)
 }
 function mousePressed(){
   mic.start();
   fft.setInput(mic);
-  col = 0;
+  start = true;
 }
 function touchStarted(){
   mic.start();
   fft.setInput(mic);
-  col = 0;
+  start = true;
 }
