@@ -24,8 +24,9 @@ function setup(){
 let xPos = 0;
 let beat = 0;
 let lastBeat = 0;
+let col = 255;
 function draw(){
-  background(0)
+  background(col)
   xPos = (xPos + 1)%width
 
   let spectrum = fft.analyze()
@@ -82,4 +83,5 @@ function keyPressed(){
 function mousePressed(){
   mic.start();
   fft.setInput(mic);
+  col = 0;
 }
