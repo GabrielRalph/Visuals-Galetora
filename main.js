@@ -86,3 +86,8 @@ function mousePressed(){
   fft.setInput(mic);
   col = 0;
 }
+function touchStarted(){
+  mic.start();
+  fft.setInput(mic);
+  col = 0;
+}
