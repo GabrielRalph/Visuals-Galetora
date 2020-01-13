@@ -20,6 +20,7 @@ function setup(){
 
   rad = new Ball(width/2, height/2, 200, 0, -3);
   rad2 = new Radius(width/2, height/2, 200, -3);
+  mic.start();
 }
 
 
@@ -89,12 +90,10 @@ function keyPressed(){
   fullscreen(!on)
 }
 function mousePressed(){
-  mic.start();
   fft.setInput(mic);
   start = true;
 }
 function touchStarted(){
-  mic.start();
   fft.setInput(mic);
   start = true;
 }
