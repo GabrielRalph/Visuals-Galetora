@@ -1,14 +1,15 @@
 var mic, fft, sig1, sig2, sig3, rad, rad2
 var h = window.innerHeight;
 var w = window.innerWidth;
+
 function setup(){
   createCanvas(w,h)
   background(0);
   mic = new p5.AudioIn();
-  mic.start();
+
 
   fft = new p5.FFT(0.8, 256);
-  fft.setInput(mic);
+
 
   sig1 = new Signal(9);
   sig2 = new Signal(9);
@@ -77,4 +78,8 @@ function draw(){
 function keyPressed(){
   var on = fullscreen();
   fullscreen(!on)
+}
+function mousePressed(){
+  mic.start();
+  fft.setInput(mic);
 }
