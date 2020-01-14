@@ -37,7 +37,7 @@ function draw(){
     xPos = (xPos + 1)%width
 
     let spectrum = fft.analyze()
-    let bass = fft.getEnergy(50, 80)
+    let bass = fft.getEnergy(100, 120)
 
     sig1.add(bass);
     sig2.add(bass);
