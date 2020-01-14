@@ -9,9 +9,10 @@ function setup(){
   createCanvas(w,h);
   background(0);
   mic = new p5.AudioIn();
-
+  mic.start();
 
   fft = new p5.FFT(0.8, 256);
+  fft.setInput(mic);
 
 
   sig1 = new Signal(9);
@@ -20,7 +21,6 @@ function setup(){
 
   rad = new Ball(width/2, height/2, 200, 0, -3);
   rad2 = new Radius(width/2, height/2, 200, -3);
-  mic.start();
 }
 
 
@@ -90,10 +90,14 @@ function keyPressed(){
   fullscreen(!on)
 }
 function mousePressed(){
-  fft.setInput(mic);
   start = true;
+  if(getAudioContext().state !== 'running'){
+    getAudioContext().resume();
+  }
 }
 function touchStarted(){
-  fft.setInput(mic);
   start = true;
+  if(getAudioContext().state !== 'running'){
+    getAudioContext().resume();
+  }
 }
