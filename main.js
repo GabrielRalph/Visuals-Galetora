@@ -45,6 +45,11 @@ function draw(){
     colx = xPos
     let spectrum = fft.analyze()
     let bass = mic.getLevel()*fx;
+
+    fill(100, 0, 100);
+    stroke(100, 0, 0);
+
+    text(bass, 50, 50);
     sig1.add(bass);
     sig2.add(bass);
     sig3.add(bass);
