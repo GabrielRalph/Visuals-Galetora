@@ -103,6 +103,12 @@ function keyPressed(){
       initialize()
     }
     fullscreen(!on)
+  }else if(key == 'a'){
+    fx = 2/bass/fx;
+  }else if(key == 'UP_ARROW'){
+    fx += 5;
+  }else if(key == 'DOWN_ARROW'){
+    fx -= 5;
   }
 }
 function mousePressed(){
@@ -117,8 +123,6 @@ function touchStarted(){
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
   }else{
-    resizeCanvas(displayWidth, displayHeight)
-    initialize()
     fx = 2/bass/fx;
   }
 }
