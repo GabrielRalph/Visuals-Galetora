@@ -37,6 +37,7 @@ let col = 255;
 let start = false;
 var fx = 50;
 var bass = 0;
+let fade = 0;
 function draw(){
 
 
@@ -48,9 +49,10 @@ function draw(){
     bass = mic.getLevel()*fx;
 
 
-    fill(100, 0, 100);
-    stroke(100, 0, 0);
-    text(fx, 50, 50);
+    colorMode(RGB, 50)
+    fill(fade--);
+    stroke(0);
+    text('Scale: ' + Math.round(fx), 50, 50);
 
     sig1.add(bass);
     sig2.add(bass);
@@ -77,9 +79,7 @@ function draw(){
 
      }
      lastBeat = bass;
-     fill(100, 0, 100);
-     stroke(100, 0, 0);
-     text(fx, 50, 50);
+
     rainBeat.set('f');
     rainBeat.set('s', (x, d) => {return Math.round(x + d/2)%d});
     rad2.render();
@@ -115,14 +115,15 @@ function keyPressed(){
     fx -= 5;
   }
 }
-function mousePressed(){
-  start = true;
-  if(getAudioContext().state !== 'running'){
-    getAudioContext().resume();
-  }
-}
+// function mousePressed(){
+//   start = true;
+//   if(getAudioContext().state !== 'running'){
+//     getAudioContext().resume();
+//   }
+// }
 var lastY = 0;
 function touchMoved(event){
+  fade = 50;
   if(event.touches){
     fx += (lastY - event.touches[0].pageY)*event.touches[0].force;
     lastY = event.touches[0].pageY;
@@ -131,9 +132,11 @@ function touchMoved(event){
   }
 }
 
-function touchStarted(){
+function touchStarted(event){
   start = true;
-
+  if(event.touches){
+    lastY = event.touches[0].pageY;
+  }
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
   }
