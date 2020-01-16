@@ -38,6 +38,10 @@ let start = false;
 var fx = 50;
 var bass = 0;
 let fade = 0;
+let touchX = 0;
+let touchY = 0;
+let touchR = 0;
+let touchEnd = 1;
 function draw(){
 
 
@@ -48,11 +52,11 @@ function draw(){
     let spectrum = fft.analyze()
     bass = mic.getLevel()*fx;
 
-
     colorMode(RGB, 50)
     fill(fade--);
     stroke(0);
     text('Scale: ' + Math.round(fx), 50, 50);
+
 
     sig1.add(bass);
     sig2.add(bass);
@@ -87,6 +91,14 @@ function draw(){
     rainBeat2.set('s');
 
     rad.render();
+
+    colorMode(RGB, 50)
+    stroke(0,0,0,0)
+    fill(50,50,50,25);
+    ellipse(touchX, touchY, touchR);
+    touchR*=touchEnd;
+
+
   }else{
     image(logo, width/2, height/2);
     imageMode(CENTER);
@@ -125,14 +137,20 @@ var lastY = 0;
 function touchMoved(event){
   fade = 50;
   if(event.touches){
+    touchY = event.touches[0].pageY;
+    touchX = event.touches[0].pageX;
+    touchR = event.touches[0].force*w/2
     fx += (lastY - event.touches[0].pageY)*event.touches[0].force;
     lastY = event.touches[0].pageY;
   }else{
     fx -= event.movementY;
   }
 }
-
+function touchEnded(){
+  touchEnd = 0.8;
+}
 function touchStarted(event){
+  touchEnd = 1;
   start = true;
   if(event.touches){
     lastY = event.touches[0].pageY;
