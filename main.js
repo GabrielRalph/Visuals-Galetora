@@ -59,7 +59,7 @@ function draw(){
     line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
 
     beat = sig2.dif()*10
-    if(bass > fx/5){
+    if(bass > 10){
 
       if(bass - lastBeat > fx/10){
         rainBeat.inc();
@@ -106,11 +106,14 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
+function tochMoved(){
+  fx += 2;
+}
 function touchStarted(){
   start = true;
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
   }else{
-    fx += 2;
+
   }
 }
