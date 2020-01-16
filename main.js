@@ -120,9 +120,8 @@ function mousePressed(){
 
 function touchStarted(){
   start = true;
+  fx = 2/(bass/fx);
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
-  }else{
-    fx = 2/bass/fx;
   }
 }
