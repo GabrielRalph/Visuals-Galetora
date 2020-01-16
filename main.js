@@ -35,7 +35,8 @@ let beat = 0;
 let lastBeat = 0;
 let col = 255;
 let start = false;
-let fx = 50;
+var fx = 50;
+var bass = 0;
 function draw(){
 
 
@@ -44,24 +45,24 @@ function draw(){
     xPos = (xPos + 1)%width
     colx = xPos
     let spectrum = fft.analyze()
-    let bass = mic.getLevel()*fx;
+    bass = mic.getLevel()*fx;
 
     fill(100, 0, 100);
     stroke(100, 0, 0);
+    text(fx, 50, 50);
 
-    text(bass, 50, 50);
     sig1.add(bass);
     sig2.add(bass);
     sig3.add(bass);
     strokeWeight(5)
     rainbow.inc();
     rainbow.set();
-    line(xPos, height, xPos, height - bass*fx/5);
-    line(xPos+5, height, xPos+5, height - sig2.median()*fx/5);
-    line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()*fx/25);
-    line(xPos, 0, xPos, sig1.mean()*fx/5);
-    line(xPos+5, 0, xPos+5, sig1.median()*fx/5);
-    line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
+    line(xPos, height, xPos, height - bass*fx);
+    // line(xPos+5, height, xPos+5, height - sig2.median()*fx/5);
+    // line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()*fx/25);
+    // line(xPos, 0, xPos, sig1.mean()*fx/5);
+    // line(xPos+5, 0, xPos+5, sig1.median()*fx/5);
+    // line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
 
     beat = sig2.dif()*10
     if(bass > 10){
@@ -96,6 +97,7 @@ function draw(){
 
 
 function keyPressed(){
+  console.log(key)
   if(key == 'f'){
     var on = fullscreen();
     if(!on) {
@@ -105,9 +107,9 @@ function keyPressed(){
     fullscreen(!on)
   }else if(key == 'a'){
     fx = 2/bass/fx;
-  }else if(key == 'UP_ARROW'){
+  }else if(key == 'ArrowUp'){
     fx += 5;
-  }else if(key == 'DOWN_ARROW'){
+  }else if(key == 'ArrowDown'){
     fx -= 5;
   }
 }
@@ -117,10 +119,13 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
+function touchMoved(){
+  fx += 5;
+  }
 
 function touchStarted(){
   start = true;
-  fx = 2/(bass/fx);
+
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
   }
