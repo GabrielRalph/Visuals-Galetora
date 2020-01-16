@@ -74,7 +74,9 @@ function draw(){
 
      }
      lastBeat = bass;
-
+     fill(100, 0, 100);
+     stroke(100, 0, 0);
+     text(fx, 50, 50);
     rainBeat.set('f');
     rainBeat.set('s', (x, d) => {return Math.round(x + d/2)%d});
     rad2.render();
@@ -118,10 +120,9 @@ function mousePressed(){
   }
 }
 function touchMoved(event){
-  fx += event.movementY;
-  fill(100, 0, 100);
-  stroke(100, 0, 0);
-  text(fx, 50, 50);
+  console.log(event.movementY)
+  fx -= event.movementY;
+
 }
 
 function touchStarted(){
