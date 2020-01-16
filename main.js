@@ -118,7 +118,8 @@ function mousePressed(){
   }
 }
 function touchMoved(event){
-  fx += event.movementY;
+  fx += 5;
+  console.log(event)
   fill(100, 0, 100);
   stroke(100, 0, 0);
   text(fx, 50, 50);
