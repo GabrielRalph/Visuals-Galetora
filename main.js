@@ -59,7 +59,7 @@ function draw(){
     line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
 
     beat = sig2.dif()*10
-    if(bass > 10){
+    if(bass > fx/5){
 
       if(bass - lastBeat > 5){
         rainBeat.inc();
