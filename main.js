@@ -119,6 +119,7 @@ function touchStarted(){
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
   }else{
-
+    resizeCanvas(displayWidth, displayHeight)
+    initialize()
   }
 }
