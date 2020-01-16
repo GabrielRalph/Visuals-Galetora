@@ -35,7 +35,7 @@ let beat = 0;
 let lastBeat = 0;
 let col = 255;
 let start = false;
-
+let fx = 50;
 function draw(){
 
 
@@ -44,19 +44,19 @@ function draw(){
     xPos = (xPos + 1)%width
     colx = xPos
     let spectrum = fft.analyze()
-    let bass = mic.getLevel()*50;
+    let bass = mic.getLevel()*fx;
     sig1.add(bass);
     sig2.add(bass);
     sig3.add(bass);
     strokeWeight(5)
     rainbow.inc();
     rainbow.set();
-    line(xPos, height, xPos, height - bass*10);
-    line(xPos+5, height, xPos+5, height - sig2.median()*10);
-    line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()/2);
-    line(xPos, 0, xPos, sig1.mean()*10);
-    line(xPos+5, 0, xPos+5, sig1.median()*10);
-    line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()/5);
+    line(xPos, height, xPos, height - bass*fx/5);
+    line(xPos+5, height, xPos+5, height - sig2.median()*fx/5);
+    line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()*fx/25);
+    line(xPos, 0, xPos, sig1.mean()*fx/5);
+    line(xPos+5, 0, xPos+5, sig1.median()*fx/5);
+    line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
 
     beat = sig2.dif()*10
     if(bass > 10){
@@ -110,5 +110,7 @@ function touchStarted(){
   start = true;
   if(getAudioContext().state !== 'running'){
     getAudioContext().resume();
+  }else{
+    fx += 2;
   }
 }
