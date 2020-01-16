@@ -120,7 +120,7 @@ function mousePressed(){
   }
 }
 function touchMoved(event){
-  console.log(event.movementY)
+  alert(event.movementY)
   fx -= event.movementY;
 
 }
