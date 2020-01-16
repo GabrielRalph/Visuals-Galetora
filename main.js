@@ -61,7 +61,7 @@ function draw(){
     beat = sig2.dif()*10
     if(bass > fx/5){
 
-      if(bass - lastBeat > 5){
+      if(bass - lastBeat > fx/10){
         rainBeat.inc();
         rainBeat2.inc();
         rad.changeVel(0, 30)
