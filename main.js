@@ -119,6 +119,6 @@ function touchStarted(){
   }else{
     resizeCanvas(displayWidth, displayHeight)
     initialize()
-    fx = 2/lastBeat/fx;
+    fx = 2/bass/fx;
   }
 }
