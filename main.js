@@ -66,7 +66,7 @@ function draw(){
     beat = sig2.dif()*10
     if(bass > 10){
 
-      if(bass - lastBeat > fx/10){
+      if(bass - lastBeat > 5){
         rainBeat.inc();
         rainBeat2.inc();
         rad.changeVel(0, 30)
@@ -111,9 +111,7 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
-function touchMoved(){
-  fx += 2;
-}
+
 function touchStarted(){
   start = true;
   if(getAudioContext().state !== 'running'){
@@ -121,5 +119,6 @@ function touchStarted(){
   }else{
     resizeCanvas(displayWidth, displayHeight)
     initialize()
+    fx = 2/beat/fx;
   }
 }
