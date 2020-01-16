@@ -74,7 +74,9 @@ function draw(){
 
      }
      lastBeat = bass;
-
+     fill(100, 0, 100);
+     stroke(100, 0, 0);
+     text(fx, 50, 50);
     rainBeat.set('f');
     rainBeat.set('s', (x, d) => {return Math.round(x + d/2)%d});
     rad2.render();
@@ -117,8 +119,14 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
+var lastY = 0;
 function touchMoved(event){
-  fx += 5;
+  if(event.touches[0].pageY){
+    fx += (lastY - event.touches[0].pageY)*event.touches[0].force;
+  }else{
+    fx -= event.movementY;
+  }
+  lastY = event.touches[0].pageY;
   console.log(event)
   fill(100, 0, 100);
   stroke(100, 0, 0);
