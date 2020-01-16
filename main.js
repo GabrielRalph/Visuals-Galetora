@@ -106,7 +106,7 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
-function tochMoved(){
+function touchMoved(){
   fx += 2;
 }
 function touchStarted(){
