@@ -47,7 +47,9 @@ function draw(){
     let spectrum = fft.analyze()
     bass = mic.getLevel()*fx;
 
-
+    fill(100, 0, 100);
+    stroke(100, 0, 0);
+    text(fx, 50, 50);
 
     sig1.add(bass);
     sig2.add(bass);
@@ -97,7 +99,6 @@ function draw(){
 
 
 function keyPressed(){
-  console.log(key)
   if(key == 'f'){
     var on = fullscreen();
     if(!on) {
@@ -121,16 +122,13 @@ function mousePressed(){
 }
 var lastY = 0;
 function touchMoved(event){
-  if(event.touches[0].pageY){
+  if(event.touches){
     fx += (lastY - event.touches[0].pageY)*event.touches[0].force;
   }else{
     fx -= event.movementY;
   }
   lastY = event.touches[0].pageY;
   console.log(event)
-  fill(100, 0, 100);
-  stroke(100, 0, 0);
-  text(fx, 50, 50);
 }
 
 function touchStarted(){
