@@ -119,8 +119,9 @@ function mousePressed(){
     getAudioContext().resume();
   }
 }
-function touchMoved(){
-  fx += 5;
+function touchMoved(event){
+  console.log(event);
+  fx += event.movementY;
   }
 
 function touchStarted(){
