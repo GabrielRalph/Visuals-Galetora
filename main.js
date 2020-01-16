@@ -47,9 +47,7 @@ function draw(){
     let spectrum = fft.analyze()
     bass = mic.getLevel()*fx;
 
-    fill(100, 0, 100);
-    stroke(100, 0, 0);
-    text(fx, 50, 50);
+
 
     sig1.add(bass);
     sig2.add(bass);
@@ -120,9 +118,11 @@ function mousePressed(){
   }
 }
 function touchMoved(event){
-  console.log(event);
   fx += event.movementY;
-  }
+  fill(100, 0, 100);
+  stroke(100, 0, 0);
+  text(fx, 50, 50);
+}
 
 function touchStarted(){
   start = true;
