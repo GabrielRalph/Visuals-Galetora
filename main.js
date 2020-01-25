@@ -16,6 +16,7 @@ function initialize(){
   rad = new Ball(width/2, height/2, 200, 0, -2.5);
   rad2 = new Radius(width/2, height/2, 200, -3);
   rad.xVel = 5;
+  xPos = width/2;
 }
 function setup(){
   createCanvas(w,h);
@@ -26,6 +27,7 @@ function setup(){
   fft = new p5.FFT(0.8, 256);
   fft.setInput(mic);
   initialize();
+
 }
 
 
@@ -42,13 +44,14 @@ let touchX = 0;
 let touchY = 0;
 let touchR = 0;
 let touchEnd = 1;
+let xInc = 5;
+var lastSpectrum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 function draw(){
 
 
   background(col)
   if(start&&(col == 0)){
-    xPos = (xPos + 1)%width
-    colx = xPos
+
     let spectrum = fft.analyze()
     bass = mic.getLevel()*fx;
 
@@ -56,20 +59,6 @@ function draw(){
     fill(fade--);
     stroke(0);
     text('Scale: ' + Math.round(fx), 50, 50);
-
-
-    sig1.add(bass);
-    sig2.add(bass);
-    sig3.add(bass);
-    strokeWeight(5)
-    rainbow.inc();
-    rainbow.set();
-    line(xPos, height, xPos, height - bass*fx);
-    // line(xPos+5, height, xPos+5, height - sig2.median()*fx/5);
-    // line(xPos+10, height, xPos+10, height - sig2.dif()*sig2.median()*fx/25);
-    // line(xPos, 0, xPos, sig1.mean()*fx/5);
-    // line(xPos+5, 0, xPos+5, sig1.median()*fx/5);
-    // line(xPos+10, 0, xPos+10, sig1.dif()*sig1.median()*fx/10);
 
     beat = sig2.dif()*10
     if(bass > 10){
@@ -87,11 +76,20 @@ function draw(){
     rainBeat.set('f');
     rainBeat.set('s', (x, d) => {return Math.round(x + d/2)%d});
     rad2.render();
+
     rainBeat2.set('f', (x, d) => {return Math.round(x + d/2)%d});
     rainBeat2.set('s');
-
     rad.render();
 
+    strokeWeight(5);
+
+    for(var i = 0; i < 5; i ++){
+      rainbow.inc();
+      rainbow.set('s');
+      var dif = 5*((i%2)?-1:1)*((i%2) + i)/2
+      line(rad.x + dif, 0, rad.x+ dif, (spectrum[i])*fx/(rad.y/h)/1500);
+    }
+    lastSpectrum = spectrum
     colorMode(RGB, 50)
     stroke(0,0,0,0)
     fill(50,50,50,25);
